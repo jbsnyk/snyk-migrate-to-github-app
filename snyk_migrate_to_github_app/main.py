@@ -60,7 +60,7 @@ def main(
         Annotated[
             bool,
             typer.Option(
-                help='Migrate both github and github-enterprise projects, default is only github-enterprise')] = False,
+                help='Migrate both github and github-cloud-app projects, default is only github-cloud-app')] = False,
     github_server_app:
         Annotated[
             bool,
@@ -146,13 +146,13 @@ def verify_org_integrations(snyk_token, org_id, github_server_app=False, tenant=
 
         return True
 
-def get_all_targets(snyk_token, org_id, origin='github-enterprise', tenant=''):
+def get_all_targets(snyk_token, org_id, origin='github-cloud-app', tenant=''):
     """Helper function to retrieve targets in an org
 
     Args:
         snyk_token (str): Snyk API token
         org_id (str): Snyk Organization ID
-        origin (str, optional): Filter to retrieve targets of a certain origin. Defaults to 'github-enterprise'.
+        origin (str, optional): Filter to retrieve targets of a certain origin. Defaults to 'github-cloud-app'.
         tenant (str, optional): Snyk tenant
 
     Returns:
@@ -205,7 +205,7 @@ def dry_run_targets(targets):
     print(f"Total Targets: {len(targets)}")
 
 def migrate_targets(snyk_token, org_id, targets, github_server_app=False, tenant=''):
-    """Helper function to migrate list of github and github-enterprise targets to github-cloud-app
+    """Helper function to migrate list of github and github-cloud-app targets to github-enterprise
 
     Args:
         snyk_token (str): Snyk API token
@@ -222,7 +222,7 @@ def migrate_targets(snyk_token, org_id, targets, github_server_app=False, tenant
     if tenant == 'eu':
         base_url = SNYK_HIDDEN_API_BASE_URL_EU
 
-    source_type = 'github-cloud-app'
+    source_type = 'github-enterprise'
 
     if github_server_app:
         source_type = 'github-server-app'
